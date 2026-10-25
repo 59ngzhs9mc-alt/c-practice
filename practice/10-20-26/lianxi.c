@@ -163,3 +163,18 @@
 //	system("pause");   //让控制台窗口停住，避免程序结束后窗口立刻关闭
 //	return 0;
 //}
+
+//void test()
+//{
+//	int n = 0;
+//	n++;
+//	printf("%d", n);
+//}
+//int main()
+//{
+//	for (int i = 0; i < 5; i++)
+//	{
+//		test();
+//	}
+//	return 0;
+//}
