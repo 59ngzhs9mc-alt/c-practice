@@ -16,7 +16,8 @@
 //game.c 按 C 编译，text.cpp 按 C++ 编译；
 //用 extern "C" 保证 C++ 侧按 C 规则链接这些函数
 #ifdef __cplusplus
-extern "C" {
+extern "C" 
+{
 #endif
 
 void IntBoard(char board[ROWS][COLS], int row, int col, int set);
