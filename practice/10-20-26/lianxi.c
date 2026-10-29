@@ -195,3 +195,40 @@
 //	printf("%5.3f",23.14);
 //	return 0;
 //}
+
+//斐波那契数列的特点是，第0个数是0，第1个数是1，往后的数字都是前2个数字之和
+//现在给定⼀个n的值(n从0开始)，计算出第n个斐波那契数（不考虑溢出）。
+
+//int fun(int a)
+//{
+//	
+//	if (a == 1)
+//		return 1;
+//	if (a == 0)
+//		return 0;
+//	return  fun(a - 1) + fun(a - 2);
+//}
+//int main()
+//{
+//	int a = 0;
+//	int num = 0;
+//
+//	scanf("%d", &a);
+//	num = fun(a);
+//	printf("%d", num);
+//}
+
+//求n的阶乘
+//int fac(int n)
+//{
+//	if (n <= 1)
+//		return 1;
+//	return n * fac(n-1);
+//}
+//int  main()
+//{
+//	int n = 0;
+//	scanf("%d",&n);
+//	int num = fac(n);
+//	printf("%d", num);
+//}
