@@ -82,33 +82,7 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 - 两套工具编译的产物互不干扰（VS 输出到 `x64\Debug\`，VS Code 输出到 `build\`）
 - 哪天彻底不用 VS 了，可以把 `*.vcxproj`、`*.vcxproj.filters`、`*.vcxproj.user`、`.vs\`、`x64\` 删掉，只留 `.slnx`（仓库惯例是提交它）
 
-## 九、在 VS Code 里直接问我（DSH）
-
-VS Code 的任务面板现在能直接调用我这个命令行 agent：不用另开一个窗口，回答直接打在终端里。
-
-**前提（只需做一次）**：命令行版要读 `DEEPSEEK_API_KEY` 这个环境变量，而桌面版用的是账号登录，两者不通用。
-
-1. 打开 https://platform.deepseek.com/api_keys 创建一个 API Key（只显示一次，立刻复制）
-2. 在 PowerShell 里执行 `setx DEEPSEEK_API_KEY "sk-..."`（只对之后新开的程序生效）
-3. 关掉 VS Code 再打开，任务就能用了
-
-三个任务：
-
-| 任务 | 干什么 |
-| --- | --- |
-| 问 DSH（当前文件） | 弹一个输入框问一句话，会把当前打开文件的路径一起带过去 |
-| 让 DSH 解释当前文件 | 不用输入，直接让它讲这个文件的结构和关键代码 |
-| 问 DSH（自由提问） | 不带文件，纯提问 |
-
-用法：打开一个 `.c` 文件 → `F1` → 运行任务 → 选一个 → 回车。
-
-跑完会看到 `Done. Exit code: 0`，上面那段就是回答。一次大约 5～10 秒，按 token 计费，一次几分钱。
-
-它能读写当前仓库里的文件，改完照常用「提交并推送到 Gitee + GitHub」推上去。
-
-> key 只存在你的用户环境变量里，没有写进仓库，也不在任何被提交的文件里。
-
-## 十、文件清单
+## 九、文件清单
 
 | 文件 | 作用 |
 | --- | --- |
@@ -119,4 +93,3 @@ VS Code 的任务面板现在能直接调用我这个命令行 agent：不用另
 | `extensions.json` | 打开文件夹时推荐的扩展 |
 | `build.ps1` | 真正的编译脚本：单文件或多文件，输出到 `build\` |
 | `push.ps1` | 提交并推送脚本：`git add -A` → commit → 推 Gitee → 推 GitHub → 核对两边 HEAD |
-| `dsh.ps1` | 把一句话交给命令行版 DSH，回答直接回到终端（任务「问 DSH」用的就是它） |
