@@ -70,6 +70,50 @@
       ],
       "presentation": { "reveal": "always", "panel": "shared", "clear": true },
       "problemMatcher": []
+    },
+    {
+      "label": "问 DSH（当前文件）",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}/.vscode/dsh.ps1",
+        "-Ask", "${input:dshAsk}",
+        "-File", "${file}"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "让 DSH 解释当前文件",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}/.vscode/dsh.ps1",
+        "-Ask", "解释这个文件的结构和关键代码，用中文，200 字以内",
+        "-File", "${file}"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "问 DSH（自由提问）",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}/.vscode/dsh.ps1",
+        "-Ask", "${input:dshAsk}"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
     }
   ],
   "inputs": [
@@ -78,6 +122,12 @@
       "type": "promptString",
       "description": "提交说明（直接回车用默认值）",
       "default": "更新练习代码"
+    },
+    {
+      "id": "dshAsk",
+      "type": "promptString",
+      "description": "要 DSH 做的事（一句话）",
+      "default": "解释这段代码做了什么"
     }
   ]
 }
