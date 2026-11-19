@@ -26,6 +26,14 @@ Debug/
 .vs
 Release/
 
+# VS Code + MinGW 本地产物（.vscode 里的配置要提交，build 输出不提交）
+build/
+x64/
+*.obj
+*.ilk
+*.pdb
+*.exe
+
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.

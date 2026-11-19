@@ -1,0 +1,49 @@
+{
+  // ---- 编码与换行：保持 VS 的习惯，避免中文注释乱码和整文件 diff ----
+  "[c]": {
+    "files.encoding": "utf8bom",
+    "files.eol": "\r\n"
+  },
+  "[cpp]": {
+    "files.encoding": "utf8bom",
+    "files.eol": "\r\n"
+  },
+
+  // .slnx 是 VS 2026 的新解决方案格式，按 XML 高亮显示
+  "files.associations": {
+    "*.slnx": "xml"
+  },
+
+  // 隐藏 VS 留下的中间产物，资源管理器更清爽（这些本来也在 .gitignore 里）
+  "files.exclude": {
+    "**/.vs": true,
+    "**/x64": true,
+    "**/Debug": true,
+    "**/Release": true,
+    "**/build": true,
+    "**/*.obj": true,
+    "**/*.ipch": true
+  },
+  "search.exclude": {
+    "**/build": true,
+    "**/x64": true,
+    "**/.vs": true
+  },
+
+  // 不要自动删掉行尾空格、不要自动补末尾换行——避免制造无意义的 diff
+  "files.trimTrailingWhitespace": false,
+  "files.insertFinalNewline": false,
+
+  // C/C++ 智能提示：指向 MinGW 的 gcc，和编译任务保持一致
+  "C_Cpp.default.compilerPath": "E:/mingw64/bin/gcc.exe",
+  "C_Cpp.default.intelliSenseMode": "windows-gcc-x64",
+  "C_Cpp.default.cStandard": "c17",
+  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.errorSquiggles": "enabled",
+
+  // 终端默认用 PowerShell，和下面的编译任务一致
+  "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
+
+  "git.autofetch": true,
+  "git.confirmSync": false
+}

@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "调试当前文件 (gdb)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/build/${fileBasenameNoExtension}.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "E:/mingw64/bin/gdb.exe",
+      "preLaunchTask": "构建当前文件",
+      "setupCommands": [
+        { "description": "为 gdb 启用整齐打印", "text": "-enable-pretty-printing", "ignoreFailures": true }
+      ]
+    },
+    {
+      "name": "调试扫雷游戏 (gdb)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/practice/mine_sweeping/Project1/build/Project1.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/practice/mine_sweeping/Project1",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "E:/mingw64/bin/gdb.exe",
+      "preLaunchTask": "构建扫雷游戏",
+      "setupCommands": [
+        { "description": "为 gdb 启用整齐打印", "text": "-enable-pretty-printing", "ignoreFailures": true }
+      ]
+    }
+  ]
+}

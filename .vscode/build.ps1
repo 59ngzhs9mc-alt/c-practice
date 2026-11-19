@@ -1,0 +1,94 @@
+param(
+    [string]$Source,
+    [string]$Project,
+    [switch]$Run
+)
+
+# Build helper for this repo: compiles one file (-Source) or a whole folder (-Project)
+# with MinGW-w64 gcc/g++ into <dir>\build\<name>.exe, then optionally runs it.
+# Kept ASCII-only on purpose: PowerShell 5.1 reads BOM-less UTF-8 as ANSI and would
+# garble any Chinese text here.
+
+$ErrorActionPreference = 'Stop'
+$Gcc = 'E:\mingw64\bin\gcc.exe'
+$Gpp = 'E:\mingw64\bin\g++.exe'
+
+if ($Project) {
+    $dir   = (Resolve-Path $Project).Path
+    $files = @(Get-ChildItem -Path $dir -File | Where-Object { $_.Extension -in '.c', '.cpp' })
+    if ($files.Count -eq 0) { Write-Host "No .c/.cpp files in: $dir" -ForegroundColor Red; exit 1 }
+    $name = Split-Path $dir -Leaf
+}
+elseif ($Source) {
+    $file  = Get-Item (Resolve-Path $Source).Path
+    $dir   = $file.DirectoryName
+    $files = @($file)
+    $name  = $file.BaseName
+}
+else {
+    Write-Host 'Usage: build.ps1 -Source <file> | -Project <dir> [-Run]' -ForegroundColor Red
+    exit 1
+}
+
+$buildDir = Join-Path $dir 'build'
+$objDir   = Join-Path $buildDir 'obj'
+New-Item -ItemType Directory -Force -Path $objDir | Out-Null
+$exe = Join-Path $buildDir "$name.exe"
+
+$defs = @('-D_CRT_SECURE_NO_WARNINGS', '-D__USE_MINGW_ANSI_STDIO=1')
+$warn = @('-Wall', '-Wextra', '-Wno-unused-parameter', '-Wno-unused-variable')
+$std  = @('-g', '-O0')
+
+# From here on we check $LASTEXITCODE ourselves: letting native stderr turn into a
+# terminating error would hide the friendly "no main()" hint below.
+$ErrorActionPreference = 'Continue'
+
+Write-Host ''
+Write-Host "Sources: $($files.Name -join ', ')" -ForegroundColor Cyan
+Write-Host "Output : $exe" -ForegroundColor Cyan
+Write-Host ''
+
+$objects  = @()
+$hadError = $false
+
+foreach ($f in $files) {
+    $isCpp = $f.Extension -eq '.cpp'
+    $cc    = if ($isCpp) { $Gpp } else { $Gcc }
+    $obj   = Join-Path $objDir ($f.BaseName + '.o')
+    $tag   = if ($isCpp) { 'C++' } else { 'C' }
+
+    Write-Host (">>> [{0}] {1}" -f $tag, $f.Name) -ForegroundColor Yellow
+    $argList = @($std + $warn + $defs + @('-c', $f.FullName, '-o', $obj))
+    & $cc @argList 2>&1 | ForEach-Object { Write-Host "    $_" }
+    if ($LASTEXITCODE -ne 0) { $hadError = $true } else { $objects += $obj }
+}
+
+if ($hadError) {
+    Write-Host ''
+    Write-Host 'Compile failed. See errors above.' -ForegroundColor Red
+    exit 1
+}
+
+$linker = if ($files | Where-Object { $_.Extension -eq '.cpp' }) { $Gpp } else { $Gcc }
+Write-Host ''
+Write-Host '>>> linking' -ForegroundColor Yellow
+& $linker @($objects + @('-o', $exe)) 2>&1 | ForEach-Object { Write-Host "    $_" }
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host ''
+    Write-Host 'No main() found - the file is probably fully commented out.' -ForegroundColor Yellow
+    Write-Host 'Compile (syntax check) passed, so keep editing; nothing to run yet.' -ForegroundColor Yellow
+    exit 2
+}
+
+Write-Host ''
+Write-Host "Build OK -> $exe" -ForegroundColor Green
+
+if ($Run) {
+    Write-Host ''
+    Write-Host ('-' * 60) -ForegroundColor DarkGray
+    try { [Console]::OutputEncoding = [Text.Encoding]::UTF8 } catch { }
+    & $exe
+    Write-Host ('-' * 60) -ForegroundColor DarkGray
+    Write-Host "Exit code: $LASTEXITCODE" -ForegroundColor DarkGray
+}
