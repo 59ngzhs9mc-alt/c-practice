@@ -20,10 +20,14 @@ if ($Project) {
     $name = Split-Path $dir -Leaf
 }
 elseif ($Source) {
-    $file  = Get-Item (Resolve-Path $Source).Path
-    $dir   = $file.DirectoryName
-    $files = @($file)
-    $name  = $file.BaseName
+    $file = Get-Item (Resolve-Path $Source).Path
+    $dir  = $file.DirectoryName
+    # Compile the whole folder when the current file lives next to other sources
+    # (Project1: game.c + text.cpp must be linked together). A lone file builds alone.
+    $files = @(Get-ChildItem -Path $dir -File | Where-Object { $_.Extension -in '.c', '.cpp' })
+    if ($files.Count -eq 0) { $files = @($file) }
+    $multi = $files.Count -gt 1
+    $name  = if ($multi) { Split-Path $dir -Leaf } else { $file.BaseName }
 }
 else {
     Write-Host 'Usage: build.ps1 -Source <file> | -Project <dir> [-Run]' -ForegroundColor Red
@@ -46,6 +50,7 @@ $ErrorActionPreference = 'Continue'
 Write-Host ''
 Write-Host "Sources: $($files.Name -join ', ')" -ForegroundColor Cyan
 Write-Host "Output : $exe" -ForegroundColor Cyan
+if ($multi) { Write-Host 'Note   : several sources in this folder - they are linked as ONE program' -ForegroundColor DarkGray }
 Write-Host ''
 
 $objects  = @()
@@ -83,6 +88,11 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Host ''
 Write-Host "Build OK -> $exe" -ForegroundColor Green
+
+# Stable alias so F5 (launch.json) works for single files and multi-file folders alike.
+$alias = Join-Path $buildDir 'run.exe'
+Copy-Item -Force $exe $alias
+Write-Host "F5 alias -> $alias" -ForegroundColor DarkGray
 
 if ($Run) {
     Write-Host ''
