@@ -20,6 +20,7 @@
 | 编译当前打开的文件 | `Ctrl + Shift + B` |
 | 编译并运行当前文件 | `Ctrl + Shift + P` → 运行任务 → **构建并运行当前文件** |
 | 调试当前文件（断点、单步） | `F5`（会先自动编译） |
+| 提交并推送到两个平台 | `Ctrl + Shift + P`（或 `F1`）→ 运行任务 → **提交并推送到 Gitee + GitHub** |
 | 编译并运行扫雷 | 运行任务 → **构建扫雷游戏** |
 
 `Ctrl + Shift + B` 默认那个任务叫「构建当前文件」，实际规则是：**当前文件所在目录里还有别的 `.c` / `.cpp` 时，会把同目录源码一起编译、链接成一个程序**（扫雷就是这样，打开 `text.cpp` 按一下也能编出完整游戏）；目录里只剩它自己，就单独编译。所以 `lianxi.c`、`practice.c` 这种单文件练习照样一键编译。
@@ -63,7 +64,7 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 
 不用再开终端敲命令，也不用每次找人：
 
-`Ctrl + Shift + P` → 运行任务 → **提交并推送到 Gitee + GitHub** → 敲一句提交说明（直接回车就是默认的「更新练习代码」）
+`Ctrl + Shift + P`（或者 `F1`，两个键效果一样）→ 运行任务 → **提交并推送到 Gitee + GitHub** → 敲一句提交说明（直接回车就是默认的「更新练习代码」）
 
 它一次做完四件事：`git add -A` → `git commit` → 推 Gitee（origin）→ 推 GitHub（github），最后把两边远端最新的提交号打出来，对得上显示 `[OK]`，对不上显示 `[DIFF]`。
 
