@@ -59,7 +59,21 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 
 如果想让某个多文件项目也有专属的「构建并运行」按钮，在 `.vscode\tasks.json` 里照抄「构建扫雷游戏」那条，把 `-Project` 后面的路径改掉即可。
 
-## 七、VS 还留着吗？
+## 七、提交并推送到 Gitee + GitHub
+
+不用再开终端敲命令，也不用每次找人：
+
+`Ctrl + Shift + P` → 运行任务 → **提交并推送到 Gitee + GitHub** → 敲一句提交说明（直接回车就是默认的「更新练习代码」）
+
+它一次做完四件事：`git add -A` → `git commit` → 推 Gitee（origin）→ 推 GitHub（github），最后把两边远端最新的提交号打出来，对得上显示 `[OK]`，对不上显示 `[DIFF]`。
+
+- **没有改动时**：不会空提交，只做推送（如果本地有没推的提交，正好补推）
+- **只想推、不想提交**（比如你已经在终端里 commit 过了）：用另一个任务 **仅推送（不提交）到 Gitee + GitHub**
+- **推送被拒**（提示 non-fast-forward）：说明两个平台的记录对不上，先 `git pull --rebase github master` 再推，或者叫我处理
+
+> 还是那句话：**别用「修改上次提交(Amend)」**。已经推上去的提交被改写，就会出现上次那种分叉。
+
+## 八、VS 还留着吗？
 
 留着，不冲突：
 
@@ -67,7 +81,7 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 - 两套工具编译的产物互不干扰（VS 输出到 `x64\Debug\`，VS Code 输出到 `build\`）
 - 哪天彻底不用 VS 了，可以把 `*.vcxproj`、`*.vcxproj.filters`、`*.vcxproj.user`、`.vs\`、`x64\` 删掉，只留 `.slnx`（仓库惯例是提交它）
 
-## 八、文件清单
+## 九、文件清单
 
 | 文件 | 作用 |
 | --- | --- |
@@ -77,3 +91,4 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 | `launch.json` | `F5` 调试配置（gdb） |
 | `extensions.json` | 打开文件夹时推荐的扩展 |
 | `build.ps1` | 真正的编译脚本：单文件或多文件，输出到 `build\` |
+| `push.ps1` | 提交并推送脚本：`git add -A` → commit → 推 Gitee → 推 GitHub → 核对两边 HEAD |

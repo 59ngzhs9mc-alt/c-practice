@@ -42,6 +42,42 @@
       ],
       "presentation": { "reveal": "always", "panel": "shared", "clear": true },
       "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "提交并推送到 Gitee + GitHub",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}/.vscode/push.ps1",
+        "-Repo", "${workspaceFolder}",
+        "-Message", "${input:commitMsg}"
+      ],
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "仅推送（不提交）到 Gitee + GitHub",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}/.vscode/push.ps1",
+        "-Repo", "${workspaceFolder}",
+        "-PushOnly"
+      ],
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "commitMsg",
+      "type": "promptString",
+      "description": "提交说明（直接回车用默认值）",
+      "default": "更新练习代码"
     }
   ]
 }
