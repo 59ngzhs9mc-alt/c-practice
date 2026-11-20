@@ -36,6 +36,18 @@
   "C_Cpp.default.cppStandard": "c++17",
   "C_Cpp.errorSquiggles": "enabled",
 
+  // ---- 打字时不再自动弹补全/参数提示（需要时按 Ctrl+空格 手动呼出）----
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.wordBasedSuggestions": "off",
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.parameterHints.enabled": false,
+  "editor.inlineSuggest.enabled": false,
+
   // 终端默认用 PowerShell，和下面的编译任务一致
   "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
 
