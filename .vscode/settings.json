@@ -9,12 +9,7 @@
     "files.eol": "\r\n"
   },
 
-  // .slnx 是 VS 2026 的新解决方案格式，按 XML 高亮显示
-  "files.associations": {
-    "*.slnx": "xml"
-  },
-
-  // 隐藏 VS 留下的中间产物，资源管理器更清爽（这些本来也在 .gitignore 里）
+  // 隐藏编译中间产物，资源管理器更清爽（这些本来也在 .gitignore 里）
   "files.exclude": {
     "**/.vs": true,
     "**/x64": true,

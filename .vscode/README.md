@@ -31,13 +31,11 @@
 
 - 每个目录下生成 `build\`：`build\名字.exe`（单文件用文件名，多文件用目录名）、`build\run.exe`（同上的副本，`F5` 调试固定用它）和 `build\obj\*.o`
 - `build/` 已经加进 `.gitignore`，不会被提交
-- VS 留下的 `x64\`、`Debug\`、`Release\` 也已忽略，眼不见为净
 
 ## 四、几个已经替你调好的细节
 
-- **编码**：`[c]` / `[cpp]` 固定用 `utf8bom` + `CRLF`，和你在 VS 里存的格式一致。这样中文注释不会乱码，`git diff` 也不会因为换行符整文件飘红。
+- **编码**：`[c]` / `[cpp]` 固定用 `utf8bom` + `CRLF`，跟原来的习惯保持一致。这样中文注释不会乱码，`git diff` 也不会因为换行符整文件飘红。
 - **不自动删行尾空格、不自动补末尾换行**：避免每次保存都制造无意义的 diff。
-- **`.slnx` 按 XML 显示**：VS 2026 的解决方案文件格式，保留着不碍事。
 - **编译选项**：`-Wall -Wextra -g -O0`，有警告会显示出来，方便初学阶段发现问题。
 
 ## 五、特意处理过的「新手坑」
@@ -74,13 +72,15 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 
 > 还是那句话：**别用「修改上次提交(Amend)」**。已经推上去的提交被改写，就会出现上次那种分叉。
 
-## 八、VS 还留着吗？
+## 八、Visual Studio 的工程文件已清理
 
-留着，不冲突：
+用 VS Code 就够了，所以 VS 那套东西已经删干净：
 
-- VS 的 `.slnx` / `.vcxproj` 还在，真需要用 VS 打开调试也行
-- 两套工具编译的产物互不干扰（VS 输出到 `x64\Debug\`，VS Code 输出到 `build\`）
-- 哪天彻底不用 VS 了，可以把 `*.vcxproj`、`*.vcxproj.filters`、`*.vcxproj.user`、`.vs\`、`x64\` 删掉，只留 `.slnx`（仓库惯例是提交它）
+- 删掉了各目录的 `.slnx`、`.vcxproj`、`.vcxproj.filters`、`.vcxproj.user`
+- 删掉了 `.vs\`（VS 缓存）和 `x64\`（VS 编译产物），仓库体积从 63MB 降到 300KB 出头
+- 源码一个没动，`.c` / `.cpp` / `.h` 全在
+
+哪天还想用 VS 打开：新建一个空工程，把这些源文件加进去即可（工程文件本身就几个复选框的事）。
 
 ## 九、文件清单
 
@@ -88,7 +88,7 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 | --- | --- |
 | `settings.json` | 编码、换行、隐藏产物、编译器路径 |
 | `c_cpp_properties.json` | 智能提示（补全/跳转）用哪个编译器、C/C++ 标准 |
-| `tasks.json` | 三个编译任务，`Ctrl + Shift + B` 用的就是这里 |
+| `tasks.json` | 五个任务：三个编译 + 两个提交推送，`Ctrl + Shift + B` 和 `F1` 用的就是这里 |
 | `launch.json` | `F5` 调试配置（gdb） |
 | `extensions.json` | 打开文件夹时推荐的扩展 |
 | `build.ps1` | 真正的编译脚本：单文件或多文件，输出到 `build\` |
