@@ -41,7 +41,10 @@ $exe = Join-Path $buildDir "$name.exe"
 
 $defs = @('-D_CRT_SECURE_NO_WARNINGS', '-D__USE_MINGW_ANSI_STDIO=1')
 $warn = @('-Wall', '-Wextra', '-Wno-unused-parameter', '-Wno-unused-variable')
-$std  = @('-g', '-O0')
+$std  = @('-g', '-O0', '-finput-charset=UTF-8', '-fexec-charset=GBK')
+# -finput-charset: the .c files are UTF-8 (with BOM), so gcc reads them as UTF-8.
+# -fexec-charset : Windows console here is code page 936 (GBK); without this the
+#                  Chinese printf() output shows as garbage.
 
 # From here on we check $LASTEXITCODE ourselves: letting native stderr turn into a
 # terminating error would hide the friendly "no main()" hint below.
@@ -97,7 +100,9 @@ Write-Host "F5 alias -> $alias" -ForegroundColor DarkGray
 if ($Run) {
     Write-Host ''
     Write-Host ('-' * 60) -ForegroundColor DarkGray
-    try { [Console]::OutputEncoding = [Text.Encoding]::UTF8 } catch { }
+    # Match the console code page with -fexec-charset=GBK above, so Chinese
+    # output shows normally both here and in the separate debug console.
+    try { [Console]::OutputEncoding = [Text.Encoding]::GetEncoding(936) } catch { }
     & $exe
     Write-Host ('-' * 60) -ForegroundColor DarkGray
     Write-Host "Exit code: $LASTEXITCODE" -ForegroundColor DarkGray

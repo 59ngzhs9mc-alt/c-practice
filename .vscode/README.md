@@ -70,6 +70,7 @@
 - **不自动删行尾空格、不自动补末尾换行**：避免每次保存都制造无意义的 diff。
 - **不弹代码补全**：打字时不会自动蹦出建议列表，需要时按 `Ctrl + 空格` 手动呼出。
 - **编译选项**：`-Wall -Wextra -g -O0`，有警告会显示出来，方便初学阶段发现问题。
+- **中文不乱码**：额外加了 `-finput-charset=UTF-8 -fexec-charset=GBK`（源码是 UTF-8，字符串按 GBK 输出，匹配 Windows 控制台的 936 代码页）。
 
 ## 六、特意处理过的「新手坑」
 
@@ -81,6 +82,17 @@ Compile (syntax check) passed, so keep editing; nothing to run yet.
 ```
 
 退出码 2。意思是**语法检查通过了，只是还没写 main，没有东西可运行**，不是你的代码写错。继续写就行，写完 `main` 再按一次 `Ctrl + Shift + B`。
+
+**控制台里中文变成乱码**
+
+原因：源码存的是 UTF-8，而 Windows 控制台（cmd、PowerShell、F5 弹出的黑窗口）默认用 936（GBK）代码页，两边对不上就成乱码。
+
+已经处理好了：编译时加了 `-finput-charset=UTF-8 -fexec-charset=GBK`（按 UTF-8 读源码，按 GBK 输出字符串），`build.ps1` 运行时也会把控制台切到 936。所以用 `Ctrl + Shift + B`、运行任务、`F5` 调试，三种方式中文都正常。
+
+还乱码的话，多半是这两种情况：
+
+- 你自己在终端里手敲 `gcc x.c -o x.exe` —— 没带上面那两个参数，必然乱码。用任务编译就行。
+- 把输出重定向进了文件（`run.exe > out.txt`）—— 文件里是 **GBK** 编码，用 VS Code 打开时右下角点编码 → 选「通过编码重新打开」→ `GBK`，就能正常看。
 
 ## 七、加新练习的流程
 
