@@ -16,7 +16,7 @@ VS Code + MinGW-w64 下写的 C/C++ 练习和作业。
 用 VS Code 打开本文件夹（`F:\cyuyan\code`），配置都在 `.vscode/` 里，详见 `.vscode/README.md`：
 
 - `Ctrl + Shift + B` 编译当前文件
-- `F5` 调试
+- `F5` 调试（单文件直接按；多文件的扫雷见 `.vscode/README.md` 第三节）
 - `F1` → 运行任务 → 构建并运行、提交并推送到 Gitee + GitHub
 
 编译器是 `E:\mingw64\bin\gcc.exe`（MinGW-w64 15.2），不需要 Visual Studio，也不用开 `vcvars64`。

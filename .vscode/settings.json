@@ -37,7 +37,8 @@
   "C_Cpp.errorSquiggles": "enabled",
 
   // ---- 打字时不再自动弹补全/参数提示（需要时按 Ctrl+空格 手动呼出）----
-  "editor.quickSuggestions": {
+  "editor.quickSuggestions":
+   {
     "other": false,
     "comments": false,
     "strings": false
