@@ -47,33 +47,33 @@
 //}
 
 //猜数字游戏
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <time.h>
 
-void Guess(int a)
-{
-    int b=0;
+// void Guess(int a)
+// {
+//     int b=0;
 
-    while(a != 0)
-    {
-    scanf("%d",&b);
-      if(b>a)
-        printf("猜大了\n");
-      else if(b<a)
-        printf("猜小了\n");
-      else if(b ==a)
-      {
-         printf("11猜中了\n");
-         return;
-      }
-    }  
-}
-int main()
-{
-    srand((unsigned int)time(NULL));
-    int a=rand()%10+1;
+//     while(a != 0)
+//     {
+//     scanf("%d",&b);
+//       if(b>a)
+//         printf("猜大了\n");
+//       else if(b<a)
+//         printf("猜小了\n");
+//       else if(b ==a)
+//       {
+//          printf("猜中了\n");
+//          return;
+//       }
+//     }  
+// }
+// int main()
+// {
+//     srand((unsigned int)time(NULL));
+//     int a=rand()%10+1;
 
-     Guess(a);
-    return 0;
-}
+//      Guess(a);
+//     return 0;
+// }

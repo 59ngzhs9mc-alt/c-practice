@@ -1,21 +1,10 @@
-# C 语言练习
+# C 语言练习 · 常用命令
 
-C/C++ 练习和作业。用 MinGW-w64 的 `gcc` / `g++` 手动编译，VS Code 只当编辑器用。
+用 MinGW-w64 的 `gcc` / `g++` 手动编译，VS Code 只当编辑器和调试器。编译器在 `E:\mingw64\bin\`，已加进 PATH。
 
-## 目录
+**这个文件只放天天用的命令。** 配置、乱码、报错、冷门命令 → [配置与排查.md](配置与排查.md)
 
-| 目录 | 内容 |
-|---|---|
-| `practice/10-20-26/` | 猜数字小游戏、递归练习，源码 `lianxi.c` |
-| `practice/10_14_26/` | 10 月 14 日作业，源码 `zuoye.cpp` |
-| `practice/11-15-26/` | 指针与二级指针、辗转相除法、猜数字，源码 `practice.c` |
-| `practice/mine_sweeping/Project1/` | 扫雷小游戏，源码 `game.c` + `game.h` + `text.c` |
-
-## 怎么编译
-
-编译器在 `E:\mingw64\bin\`，已经加进 PATH，直接敲 `gcc` 就行。
-
-**单文件**（`lianxi.c`、`practice.c`、`zuoye.cpp` 这种）：
+## 1. 编译与运行
 
 ```powershell
 cd F:\cyuyan\code
@@ -23,73 +12,64 @@ gcc -g -Wall practice\11-15-26\practice.c -o practice.exe
 .\practice.exe
 ```
 
-**多文件**（扫雷：`game.c` + `game.h` + `text.c` 要一起编）：
+| 想干的事 | 做法 |
+|---|---|
+| 编译当前文件 | `gcc -g -Wall 文件.c -o 文件.exe` |
+| 运行 | `.\文件名.exe`（前面的 `.\` 不能省） |
+| 在 VS Code 里一键编译 | `Ctrl+Shift+B` |
+| 看编译错误 | 就编译，报错直接打在终端里，点行号可跳转 |
 
-```powershell
-cd F:\cyuyan\code\practice\mine_sweeping\Project1
-gcc -g -Wall game.c text.c -o Project1.exe
-.\Project1.exe
-```
+- `-g`：带调试信息。不加，`F5` 和 gdb 都断不住
+- `-Wall`：打开常用警告，一直带着
+- 链接失败时 gcc 会**删掉旧的 exe**，不是文件丢了
+- 多文件项目、C++、乱码 → 见 [配置与排查.md](配置与排查.md)
 
-**C++ 文件**用 `g++`；只要有一个 `.cpp` 参与，链接也要用 `g++`：
+## 2. 调试（F5）
 
-```powershell
-g++ -g -Wall practice\10_14_26\zuoye.cpp -o zuoye.exe
-```
+前提两条：文件里**有 `main`**；`.vscode\launch.json` 已配好（不用再动，备份见 [配置与排查.md](配置与排查.md) 附录 A）。
 
-**调试**：想用 gdb 就编的时候加 `-g`（上面都带了），然后按你的习惯用 `gdb 程序名` 或 VS Code 的调试功能。
+1. 打开要调试的 `.c` 文件
+2. 行号左侧点一下，出现**实心红点**（`F9` 同效）
+3. 按 `F5`：先自动编译，再启动，停在红点那行（黄色高亮）
 
-## 中文输出不乱码
+| 按键 | 作用 |
+|---|---|
+| `F5` | 开始 / 继续到下一个断点 |
+| `F9` | 当前行加/删断点 |
+| `F10` | 单步跳过（不进函数） |
+| `F11` | 单步进入（进函数内部） |
+| `Shift+F11` | 执行完当前函数并返回 |
+| `Shift+F5` | 停止调试 |
+| `Ctrl+Shift+F5` | 重新开始 |
 
-源码是 UTF-8，Windows 控制台默认代码页是 936（GBK），两边对不上就会显示成「涓枃」这种乱码。两种办法选一个。
+停下后看左侧面板：
 
-### 办法一：把终端改成 UTF-8（推荐，设置一次就够）
+- **变量**：局部变量自动列出，数组、结构体可展开
+- **监视**：手动加表达式，如 `*p`、`arr[0]@5`（数组前 5 个）、`i == 3`
+- **调用堆栈**：看是谁调用了当前函数
+- **调试控制台**：敲 `p 变量名` 直接打印
 
-改 PowerShell 的配置文件，之后新开的终端都是 UTF-8，`gcc` 不用带任何额外参数。
+断点显示成**灰色空心圆** = 没绑定，通常因为 exe 比源码旧，`Ctrl+Shift+B` 重编。
 
-文件位置：
+## 3. 编辑器快捷键
 
-```
-C:\Users\你的用户名\Documents\WindowsPowerShell\profile.ps1
-```
+| 快捷键 | 作用 |
+|---|---|
+| `Shift+Alt+F` | 格式化当前文件（Visual Studio 风格） |
+| `Ctrl+S` | 保存 |
+| `Ctrl+Shift+B` | 运行生成任务（编译当前文件） |
+| `Ctrl+反引号` | 打开/关闭终端（Tab 键上面那个键） |
+| `Ctrl+P` | 按文件名跳转 |
+| `Ctrl+Shift+F` | 全项目搜索 |
+| `Ctrl+/` | 注释 / 取消注释当前行 |
+| `Ctrl+G` | 跳到指定行 |
+| `Alt+↑ / Alt+↓` | 整行上移 / 下移 |
+| `Ctrl+D` | 选中下一个相同的词，批量改名 |
+| `Ctrl+滚轮` | 放大 / 缩小代码字号 |
+| `Ctrl+=` / `Ctrl+-` / `Ctrl+0` | 整个窗口放大 / 缩小 / 复位 |
 
-路径不用自己拼，直接在 PowerShell 里敲这行，它会用记事本打开（文件不存在会问是否新建，选「是」）：
+> 缩放：`Ctrl+滚轮` 调代码字号（会自己记住），`Ctrl+=`、`Ctrl+-`、`Ctrl+0` 缩放整个界面（菜单、侧边栏、终端一起）。两个滚轮缩放开关已在用户 `settings.json` 里打开。
 
-```powershell
-notepad $PROFILE
-```
+---
 
-把这三行写进去并保存：
-
-```powershell
-chcp 65001 > $null
-[Console]::OutputEncoding = [Text.Encoding]::UTF8
-$OutputEncoding = [Text.Encoding]::UTF8
-```
-
-然后**关掉当前终端窗口，重新开一个**——配置文件只在终端启动时加载，不重开不生效。验证：
-
-```powershell
-chcp
-```
-
-看到 `Active code page: 65001` 就成功了，以后编中文程序直接显示正常。
-
-限制：只对 PowerShell 生效。双击 exe 弹出的黑窗口和 `cmd.exe` 还是 936，那种情况用办法二。
-
-### 办法二：编译时把字符串存成 GBK
-
-让 exe 里的中文字符串直接按 GBK 存，跟系统默认代码页一致，双击运行也不乱：
-
-```powershell
-gcc -g -Wall -finput-charset=UTF-8 -fexec-charset=GBK x.c -o x.exe
-```
-
-- `-finput-charset=UTF-8`：按 UTF-8 读源码
-- `-fexec-charset=GBK`：字符串按 GBK 存进 exe
-
-适合要发给别人、或者要双击运行的版本。日常在 VS Code 终端里跑，用办法一就够了。
-
-## 关于构建产物
-
-`*.exe`、`*.obj`、`build/`、`x64/`、`.vs/` 等已在 `.gitignore` 中排除，仓库只保留源码。
+最顺的一条路：改完 `Ctrl+S` → `Ctrl+Shift+B` 编译 → 有错点行号改 → 想单步就 `F9` 打点再 `F5`。
