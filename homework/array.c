@@ -183,50 +183,51 @@
 #include <time.h>
 
 // 将数组A中的内容和数组B中的内容进行交换。（数组一样大）
-int main()
-{
-    srand((unsigned int)time(NULL));
-    int arr1[10] = {0};
-    int arr2[10] = {0};
-    // 给两个数组赋值
-    for (int i = 0; i < 10; i++)
-    {
-        arr1[i] = rand() % 100;
-        arr2[i] = rand() % 100;
-    }
+// int main()
+// {
+//     srand((unsigned int)time(NULL));
+//     int arr1[10] = {0};
+//     int arr2[10] = {0};
+//     // 给两个数组赋值
+//     for (int i = 0; i < 10; i++)
+//     {
+//         arr1[i] = rand() % 100;
+//         arr2[i] = rand() % 100;
+//     }
 
-    // 打印初始数组
-    for (int i = 0; i < 10; i++)
-    {
-        printf("%2d ", arr1[i]);
-    }
-    printf("\n");
-    for (int i = 0; i < 10; i++)
-    {
-        printf("%2d ", arr2[i]);
-    }
-    int arr3[10] = {0};
+//     // 打印初始数组
+//     for (int i = 0; i < 10; i++)
+//     {
+//         printf("%2d ", arr1[i]);
+//     }
+//     printf("\n");
+//     for (int i = 0; i < 10; i++)
+//     {
+//         printf("%2d ", arr2[i]);
+//     }
+//     int arr3[10] = {0};
 
-    // 交换数值
-    for (int i = 0; i < 10; i++)
-    {
-        arr3[i] = arr2[i];
-        arr2[i] = arr1[i];
-        arr1[i] = arr3[i];
-    }
+//     // 交换数值
+//     for (int i = 0; i < 10; i++)
+//     {
+//         arr3[i] = arr2[i];
+//         arr2[i] = arr1[i];
+//         arr1[i] = arr3[i];
+//     }
 
-    // 打印交换后的数组
-    printf("\n");
-    printf("\n");
-    for (int i = 0; i < 10; i++)
-    {
-        printf("%2d ", arr1[i]);
-    }
-    printf("\n");
-    for (int i = 0; i < 10; i++)
-    {
-        printf("%2d ", arr2[i]);
-    }
+//     // 打印交换后的数组
+//     printf("\n");
+//     printf("\n");
+//     for (int i = 0; i < 10; i++)
+//     {
+//         printf("%2d ", arr1[i]);
+//     }
+//     printf("\n");
+//     for (int i = 0; i < 10; i++)
+//     {
+//         printf("%2d ", arr2[i]);
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
+
