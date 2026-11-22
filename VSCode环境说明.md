@@ -213,6 +213,13 @@ gcc -g -Wall -finput-charset=UTF-8 -fexec-charset=GBK x.c -o x.exe
 3. ~~是否统一全仓换行符~~ **已解决**：`.gitattributes` 定死 `* text=auto eol=crlf`，`.vscode/settings.json` 里 `files.eol` 也是 `\r\n`，详见第 7 节第 10 条。
 4. ~~是否保留 `.vscode/tasks.json`~~ **已决定保留**（单文件够用；扫雷那种多文件用命令行）。
 
+第 1 条的两条路：
+
+- **一个练习一个 `.c`**（现在就是）：`homework/array.c`、`homework/prime.c`……好处是 F5 直接能跑，`tasks.json` 只编当前文件正好够用；坏处是文件多了只能靠文件名找。
+- **一个练习一个目录**：`homework/prime/prime.c`……好处是以后某个练习要拆成多文件（像扫雷）时不用搬家；坏处是简单练习也要多两层目录。
+
+目前 `homework/` 里只有 `array.c`，还来得及定。
+
 ## 10. 新对话开场白（可直接复制）
 
 > 我在学 C 语言，代码在 `F:\cyuyan\code`，只用 VS Code 写（不用 Visual Studio），编译器是 `E:\mingw64\bin` 下的 MinGW gcc 15.2，调试用 gdb。
