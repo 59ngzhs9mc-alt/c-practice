@@ -268,6 +268,7 @@ void is_prime(int a)
             if (b == 0)
             {
                 printf("%d不是素数",a);
+                break;
             }
             else
             {
