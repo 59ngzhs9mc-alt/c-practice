@@ -231,3 +231,59 @@
 //     return 0;
 // }
 
+// 实现一个函数，打印乘法口诀表，口诀表的行数和列数自己指定
+// 如：输入9，输出9*9口诀表，输出12，输出12*12的乘法口诀表。
+
+// void fun(int a)
+// {
+//     for (int i = 1; i <= a; i++)
+//     {
+//         for (int j = 1; j <= i; j++)
+//         {
+//             printf("%2d*%-2d=%2d  ", j, i, i * j);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// int main()
+// {
+//     int a = 0;
+//     scanf("%d", &a);
+//     fun(a);
+
+//     return 0;
+// }
+
+// 实现一个函数is_prime，判断一个数是不是素数。
+// 利用上面实现的is_prime函数，打印100到200之间的素数。
+void is_prime(int a)
+{
+    for (int i = 2; i < a; i++)
+    {
+        if (a != 2)
+        {
+            int b = 0;
+            b = a % i;
+            if (b == 0)
+            {
+                printf("%d不是素数",a);
+            }
+            else
+            {
+                printf("%d是素数",a);
+            }
+        }else
+        {
+            printf("2是素数");
+        }
+    }
+}
+int main()
+{
+    int a = 0;
+    scanf("%d", &a);
+    is_prime(a);
+    
+    return 0;
+}
