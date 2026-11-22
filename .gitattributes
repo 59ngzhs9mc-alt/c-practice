@@ -1,0 +1,2 @@
+# 统一换行符：仓库按 LF 存储，检出为 CRLF
+* text=auto eol=crlf
