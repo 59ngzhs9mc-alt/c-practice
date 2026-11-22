@@ -208,17 +208,12 @@ gcc -g -Wall -finput-charset=UTF-8 -fexec-charset=GBK x.c -o x.exe
 
 ## 9. 事项状态（新对话可以接着做）
 
-1. **`homework/` 的整理规则（仍待定）**：现在是「一个练习一个 `.c` 文件」还是「一个练习一个目录」？见下面两条路。
+1. ~~`homework/` 的整理规则~~ **已定（2026-11-22）**：平时**一个练习一个 `.c`**，文件名用英文小写描述（`prime.c`、`array_swap.c`、`guess_number.c`）；只有某次练习真的需要多文件（像扫雷 `game.c` + `text.c`）时，才建目录 `homework/xxx/`。理由：F5 的 `tasks.json` 只编当前文件，单文件布局按 F5 就能跑。
 2. ~~给扫雷加 F5 多文件调试配置~~ **暂不处理**（2026-11-22 决定搁置；多文件照旧手敲 `gcc game.c text.c -o Project1.exe`）。
 3. ~~是否统一全仓换行符~~ **已解决**：`.gitattributes` 定死 `* text=auto eol=crlf`，`.vscode/settings.json` 里 `files.eol` 也是 `\r\n`，详见第 7 节第 10 条。
 4. ~~是否保留 `.vscode/tasks.json`~~ **已决定保留**（单文件够用；扫雷那种多文件用命令行）。
 
-第 1 条的两条路：
-
-- **一个练习一个 `.c`**（现在就是）：`homework/array.c`、`homework/prime.c`……好处是 F5 直接能跑，`tasks.json` 只编当前文件正好够用；坏处是文件多了只能靠文件名找。
-- **一个练习一个目录**：`homework/prime/prime.c`……好处是以后某个练习要拆成多文件（像扫雷）时不用搬家；坏处是简单练习也要多两层目录。
-
-目前 `homework/` 里只有 `array.c`，还来得及定。
+现状：`homework/` 里只有 `array.c`，里面混着「数组交换」（那段先注释掉了）和「素数判断」两个练习——**暂不拆分**，等真有需要再动。
 
 ## 10. 新对话开场白（可直接复制）
 
