@@ -136,7 +136,7 @@ gcc -g -Wall -finput-charset=UTF-8 -fexec-charset=GBK x.c -o x.exe
 
 ## 6. `.vscode` 配置现状
 
-三份配置都是 VS Code / C/C++ 扩展**自动生成**的，没有手写。
+`launch.json`、`tasks.json`、`c_cpp_properties.json` 三份是 VS Code / C/C++ 扩展**自动生成**的；`settings.json` 是手写的（只放了换行符设置）。
 
 ### `launch.json`（调试，1 条配置）
 
@@ -173,6 +173,14 @@ gcc -g -Wall -finput-charset=UTF-8 -fexec-charset=GBK x.c -o x.exe
 "intelliSenseMode": "gcc-x64"
 ```
 
+### `settings.json`（手写，1 项）
+
+```jsonc
+"files.eol": "\r\n"
+```
+
+让 VS Code 新建文件默认用 CRLF，和仓库根目录 `.gitattributes`（`* text=auto eol=crlf`）保持一致。
+
 ## 7. 踩过的坑（按出现频率）
 
 1. **桌面自动化改 VS Code 编辑器有风险**：曾经把一份 README 覆盖成一行，还触发过一次文件变 0 字节。要改文件用编辑器或命令行写，别用模拟按键往里打字。
@@ -184,7 +192,7 @@ gcc -g -Wall -finput-charset=UTF-8 -fexec-charset=GBK x.c -o x.exe
 7. **`scanf("%d\n", &x)` 会吃掉后面的输入**，看起来像「卡住不动」。`\n` 应该去掉。
 8. **`printf("%d", x)` 不带 `\n`**，输出会贴在提示符后面，看着像没输出。
 9. **双击 exe 一闪而过**：程序执行完窗口就关，看结果要在终端里跑。
-10. **换行符 CRLF/LF 混用**：源文件大多是 CRLF，个别曾是 LF，导致 `git diff` 显示整文件重写（几百行假改动）。真实改动看 `git diff --ignore-cr-at-eol`。
+10. **换行符 CRLF/LF 混用 —— 已解决**：仓库根目录的 `.gitattributes` 写了 `* text=auto eol=crlf`，仓库里统一按 LF 存储、检出到本地自动还原成 CRLF，`git status` / `git diff` 不会再出现几百行的行尾假改动。之前仓库里混存的 CRLF 文件已经在一次 renormalize 提交里归一。`.vscode/settings.json` 里 `files.eol` 设为 `\r\n`，VS Code 新建文件默认也是 CRLF。真要临时对比行尾，`git diff --ignore-cr-at-eol` 仍然可用。
 11. **`.exe` 被 `.gitignore` 忽略**：本地有 exe，仓库里没有，这是预期的。
 12. **`.\xxx.exe` 报「无法识别为 cmdlet」**：当前目录不对，或漏了 `.\`。PowerShell 不搜当前目录。
 
@@ -198,12 +206,12 @@ gcc -g -Wall -finput-charset=UTF-8 -fexec-charset=GBK x.c -o x.exe
 | 素数判断 | `array.c` 里 `is_prime()` + `main` | 进行中 |
 | 扫雷 | `game.c` + `game.h` + `text.c`，10×10 棋盘、菜单 | 可运行 |
 
-## 9. 未决事项（新对话可以接着做）
+## 9. 事项状态（新对话可以接着做）
 
-1. 给扫雷加一条 F5 调试配置（`program` 指 `Project1.exe`，`preLaunchTask` 用一条「同时编两个 .c」的任务）
-2. 是否统一全仓换行符（CRLF 还是 LF），减少 diff 噪声
-3. 是否保留自动生成的 `.vscode/tasks.json`（它只支持单文件）
-4. `homework/` 的整理规则（每个练习一个文件？还是一个目录？）
+1. **`homework/` 的整理规则（仍待定）**：现在是「一个练习一个 `.c` 文件」还是「一个练习一个目录」？见下面两条路。
+2. ~~给扫雷加 F5 多文件调试配置~~ **暂不处理**（2026-11-22 决定搁置；多文件照旧手敲 `gcc game.c text.c -o Project1.exe`）。
+3. ~~是否统一全仓换行符~~ **已解决**：`.gitattributes` 定死 `* text=auto eol=crlf`，`.vscode/settings.json` 里 `files.eol` 也是 `\r\n`，详见第 7 节第 10 条。
+4. ~~是否保留 `.vscode/tasks.json`~~ **已决定保留**（单文件够用；扫雷那种多文件用命令行）。
 
 ## 10. 新对话开场白（可直接复制）
 

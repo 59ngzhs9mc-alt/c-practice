@@ -1,0 +1,4 @@
+{
+    // 新建文件的换行符：统一 CRLF（配合仓库根目录 .gitattributes 的 text=auto eol=crlf）
+    "files.eol": "\r\n"
+}
