@@ -257,34 +257,164 @@
 
 // 实现一个函数is_prime，判断一个数是不是素数。
 // 利用上面实现的is_prime函数，打印100到200之间的素数。
-void is_prime(int a)
-{
-    for (int i = 2; i < a; i++)
-    {
-        if (a != 2)
-        {
-            int b = 0;
-            b = a % i;
-            if (b == 0)
-            {
-                printf("%d不是素数",a);
-                break;
-            }
-            else
-            {
-                printf("%d是素数",a);
-            }
-        }else
-        {
-            printf("2是素数");
-        }
-    }
-}
-int main()
-{
-    int a = 0;
-    scanf("%d", &a);
-    is_prime(a);
-    
-    return 0;
-}
+// void is_prime(int a)
+// {
+//     for (int i = 2; i < a; i++)
+//     {
+//         if (a != 2)
+//         {
+//             int b = 0;
+//             b = a % i;
+//             if (b == 0)
+//             {
+//                 return;
+//             }
+//         }
+//         else
+//         {
+//             printf("2是素数");
+//         }
+//     }
+//     printf("%d是素数\n", a);
+// }
+
+// void fun()
+// {
+//     for(int i=100;i<=200;i++)
+//     {
+//         is_prime(i);
+//     }
+// }
+
+// int main()
+// {
+//     int a = 0;
+//     scanf("%d", &a);
+//     is_prime(a);
+//     fun();
+
+//     return 0;
+// }
+
+// 创建一个整形数组，完成对数组的操作
+//  1.实现函数init() 初始化数组为全0
+//  2.实现print()  打印数组的每个元素
+//  3.实现reverse()  函数完成数组元素的逆置。
+//  要求：自己设计以上函数的参数，返回值。
+
+// void init(int *p)
+// {
+//     for (int i = 0; i < 10; i++)
+//     {
+//         p = 0;
+//         printf("%2d ", p);
+//     }
+//     printf("\n");
+// }
+// void print(int *p)
+// {
+//     for(int i=0;i<10;i++)
+//     {
+//         printf("%2d ",*(p+i));
+//     }
+//     printf("\n");
+// }
+
+// void reverse(int *p)
+// {
+//     int arr1[10]={0};
+//     for(int i=0;i<10;i++)
+//     {
+//         arr1[i]= *(p+(9-i));
+//         printf("%2d ",arr1[i]);
+//     }
+//     printf("\n");
+// }
+
+// int main()
+// {
+//     srand((unsigned int)time(NULL));
+//     int arr[10] = {0};
+
+//     for (int i = 0; i < 10; i++)
+//     {
+//         arr[i] = rand() % 100;
+//         printf("%d ", arr[i]);
+//     }
+//     printf("\n");
+
+//     // 1.实现函数init() 初始化数组为全0
+//     init(arr);
+
+//     // 2.实现print()  打印数组的每个元素
+//     print(arr);
+
+//     // 3.实现reverse()  函数完成数组元素的逆置。
+//     reverse(arr);
+
+//     return 0;
+// }
+
+// 写一个二分查找函数
+// 功能：在一个升序数组中查找指定的数值，找到了就返回下标，找不到就返回-1.
+
+// void fun(int arr1[], int a,  int left, int right)
+// {
+//     while(left <= right)
+//     {
+//         int mid=left + (right -left)/2;
+
+//         if(a>arr1[mid])
+//         {
+//             left=mid+1;
+//         }
+//         if(a<arr1[mid])
+//         {
+//             right=mid -1;
+//         }
+//         if(a == arr1[mid])
+//         {
+//             printf("%d %d",arr1[mid],mid);
+//             break;
+//         }
+//     }
+// }
+// int main()
+// {
+//     int arr[10] = {0,1,2,3,4,5,6,7,8,9};
+//     int a = 0;
+//     scanf("%d", &a);
+
+//     int left = 0;
+//     int right = 9;
+
+//    fun(arr, a, left, right);
+
+//     return 0;
+// }
+
+// 实现函数判断year是不是润年。
+// int main()
+// {
+//     int year = 0;
+//     int i=10;
+//     while (i)
+//     {
+//         scanf("%d", &year);
+//         int a=(year % 1000);
+//         int b=(year % 4);
+//         int c=(year % 400);
+
+//         if (c==0 ||(a==0 && b==0))
+//         {
+//             printf("%d是闰年。\n", year);
+//         }
+//         else
+//         {
+//             printf("%d不是闰年。\n", year);
+//         }
+//         i--;
+//     }
+
+//     return 0;
+// }
