@@ -1,59 +1,174 @@
 // 二分查找
-#include <stdio.h>
+// #include <stdio.h>
 
-/* 写法 A：闭区间 [left, right]；找到返回下标，找不到返回 -1 */
-int binary_search(const int a[], int n, int target)
-{
-    int left = 0;
-    int right = n - 1; /* 闭区间：最后一个元素也算 */
+// /* 写法 A：闭区间 [left, right]；找到返回下标，找不到返回 -1 */
+// int binary_search(const int a[], int n, int target)
+// {
+//     int left = 0;
+//     int right = n - 1; /* 闭区间：最后一个元素也算 */
 
-    while (left <= right)
-    {                                        /* 区间非空就继续 */
-        int mid = left + (right - left) / 2; /* 防溢出写法 */
-        if (a[mid] == target)
-            return mid;
-        else if (a[mid] < target)
-            left = mid + 1; /* mid 已比较过，排除掉 */
-        else
-            right = mid - 1; /* 同上 */
-    }
-    return -1; /* left > right：区间空了 */
-}
+//     while (left <= right)
+//     {                                        /* 区间非空就继续 */
+//         int mid = left + (right - left) / 2; /* 防溢出写法 */
+//         if (a[mid] == target)
+//             return mid;
+//         else if (a[mid] < target)
+//             left = mid + 1; /* mid 已比较过，排除掉 */
+//         else
+//             right = mid - 1; /* 同上 */
+//     }
+//     return -1; /* left > right：区间空了 */
+// }
 
-/* 写法 B：左闭右开 [left, right)；返回第一个 >= target 的下标，全小于时返回 n */
-int lower_bound(const int a[], int n, int target)
-{
-    int left = 0;
-    int right = n; /* 半开区间：right 取 n，不是 n-1 */
+// /* 写法 B：左闭右开 [left, right)；返回第一个 >= target 的下标，全小于时返回 n */
+// int lower_bound(const int a[], int n, int target)
+// {
+//     int left = 0;
+//     int right = n; /* 半开区间：right 取 n，不是 n-1 */
 
-    while (left < right)
-    {
-        int mid = left + (right - left) / 2;
-        if (a[mid] < target)
-            left = mid + 1;
-        else
-            right = mid; /* mid 可能是答案，保留在区间里 */
-    }
-    return left; /* left == right，唯一候选 */
-}
+//     while (left < right)
+//     {
+//         int mid = left + (right - left) / 2;
+//         if (a[mid] < target)
+//             left = mid + 1;
+//         else
+//             right = mid; /* mid 可能是答案，保留在区间里 */
+//     }
+//     return left; /* left == right，唯一候选 */
+// }
 
-int main(void)
-{
-    int a[] = {1, 3, 5, 7, 9, 11, 13, 15};
-    int n = (int)(sizeof(a) / sizeof(a[0]));
-    int targets[] = {11, 4, 1, 15, 0, 16};
+// int main(void)
+// {
+//     int a[] = {1, 3, 5, 7, 9, 11, 13, 15};
+//     int n = (int)(sizeof(a) / sizeof(a[0]));
+//     int targets[] = {11, 4, 1, 15, 0, 16};
 
-    printf("== binary_search ==\n");
-    for (int i = 0; i < (int)(sizeof(targets) / sizeof(targets[0])); i++)
-        printf("找 %2d -> 下标 %d\n", targets[i], binary_search(a, n, targets[i]));
+//     printf("== binary_search ==\n");
+//     for (int i = 0; i < (int)(sizeof(targets) / sizeof(targets[0])); i++)
+//         printf("找 %2d -> 下标 %d\n", targets[i], binary_search(a, n, targets[i]));
 
-    int b[] = {1, 2, 2, 2, 3, 5}; /* 有重复元素 */
-    int m = (int)(sizeof(b) / sizeof(b[0]));
-    int qs[] = {1, 2, 3, 4, 6};
+//     int b[] = {1, 2, 2, 2, 3, 5}; /* 有重复元素 */
+//     int m = (int)(sizeof(b) / sizeof(b[0]));
+//     int qs[] = {1, 2, 3, 4, 6};
 
-    printf("\n== lower_bound（有重复元素）==\n");
-    for (int i = 0; i < (int)(sizeof(qs) / sizeof(qs[0])); i++)
-        printf("第一个 >= %d 的下标 %d\n", qs[i], lower_bound(b, m, qs[i]));
+//     printf("\n== lower_bound（有重复元素）==\n");
+//     for (int i = 0; i < (int)(sizeof(qs) / sizeof(qs[0])); i++)
+//         printf("第一个 >= %d 的下标 %d\n", qs[i], lower_bound(b, m, qs[i]));
 
-    return 0;
-}
+//     return 0;
+//}
+
+// 给你一个长度为 n 的整数数组 nums 。请你构建一个长度为 2n 的答案数组 ans ，
+// 数组下标 从 0 开始计数 ，对于所有 0 <= i < n 的 i ，满足下述所有要求
+// ans[i] == nums[i]
+// ans[i + n] == nums[i]
+// 具体而言，ans 由两个 nums 数组 串联 形成。
+// 返回数组 ans 。
+
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// /* ---------- 题目要求的函数（提交 LeetCode 时只交这一段） ---------- */
+// int* getConcatenation(int* nums, int numsSize, int* returnSize)
+// {
+//     int n = numsSize;
+
+//     /* 答案长度是 2n，必须放在堆上：函数返回后栈会失效 */
+//     int *ans = (int *)malloc(sizeof(int) * 2 * n);
+//     if (ans == NULL) {              /* 内存不足的保护分支 */
+//         *returnSize = 0;
+//         return NULL;
+//     }
+
+//     /* 一趟循环同时写前半段和后半段：nums[i] 出现在 i 和 i+n 两个位置 */
+//     for (int i = 0; i < n; i++) {
+//         ans[i]     = nums[i];
+//         ans[i + n] = nums[i];
+//     }
+
+//     *returnSize = 2 * n;            /* 不写这句，判题端拿不到长度 */
+//     return ans;
+// }
+
+// /* ---------- 本地测试用 main ---------- */
+// int main(void)
+// {
+//     int n;
+//     if (scanf("%d", &n) != 1 || n <= 0) {
+//         printf("输入错误：需要先输入正整数 n\n");
+//         return 1;
+//     }
+
+//     /* 用 n 在运行时申请输入数组，这是 OJ 里 nums 的来法 */
+//     int *nums = (int *)malloc(sizeof(int) * n);
+//     if (nums == NULL) {
+//         printf("内存分配失败\n");
+//         return 1;
+//     }
+
+//     for (int i = 0; i < n; i++) {
+//         if (scanf("%d", &nums[i]) != 1) {
+//             printf("输入错误：第 %d 个数没读到\n", i + 1);
+//             free(nums);
+//             return 1;
+//         }
+//     }
+
+//     int size = 0;                    /* 出参：函数把长度写回来 */
+//     int *ans = getConcatenation(nums, n, &size);
+//     if (ans == NULL) {
+//         printf("内存分配失败\n");
+//         free(nums);
+//         return 1;
+//     }
+
+//     /* 打印结果 */
+//     printf("ans = [");
+//     for (int i = 0; i < size; i++)
+//         printf("%s%d", i ? ", " : "", ans[i]);
+//     printf("]\nreturnSize = %d\n", size);
+
+//     free(ans);                       /* 谁 malloc 谁 free */
+//     free(nums);
+//     return 0;
+// }
+
+// 喝汽水，1瓶汽水1元，2个空瓶可以换一瓶汽水，给20元，可以喝多少汽水
+// #include <stdio.h>
+
+// int main(void)
+// {
+//     int total = 20;      /* 先买 20 瓶 */
+//     int empty = 20;      /* 20 个空瓶 */
+//     int round = 0;
+
+//     while (empty >= 2) 
+//     {
+//         round++;
+//         int new_bottles = empty / 2;      /* 能换几瓶 */
+//         int left = empty % 2;             /* 换完还剩几个空瓶 */
+//         total += new_bottles;
+//         empty = new_bottles + left;       /* 新喝出来的空瓶 */
+//         printf("第 %d 轮：换 %d 瓶，累计 %d 瓶，空瓶 %d 个\n",
+//                round, new_bottles, total, empty);
+//     }
+
+//     printf("总共能喝 %d 瓶\n", total);
+//     return 0;
+// }
+
+//arr[i]=*(arr+i)
+//int main(void)
+//{
+//    char* c[] = { "ENYER", "new", "piont", "first" };
+//    char** cp[] = { c + 3, c + 2, c + 1, c };
+//    char*** cpp = cp;
+//
+//    char* a1 = **++cpp;            /* "new"  */
+//    char* a2 = *(--*(++cpp)) + 3;  /* "new"+3 -> "" */
+//    char* a3 = *cpp[-2] + 3;       /* "first"+3 -> "st" 
+//    char* a4 = cpp[-1][-1] + 1;    /* "ENYER"+1 -> "NYER"
+//    printf("%s %s %s %s\n", a1, a2, a3, a4);
+//    return 0;
+//}
